@@ -128,10 +128,10 @@ pipeline {
                     sh "git clone https://github.com/${GITHUB_REPO}.git"
 
                     // Move the CSV file to the repository directory
-                    sh "mv ${env.TRIVY_REPORT_CSV} ${GITHUB_REPO}/"
+                    sh "mv ${env.TRIVY_REPORT_CSV} jenkins/"
 
                     // Change to the repository directory
-                    dir(GITHUB_REPO) {
+                    dir(jenkins) {
                         sh 'git add .'
                         sh 'git commit -m "Add Trivy scan report"'
                         sh 'git push'
