@@ -131,7 +131,7 @@ pipeline {
                     sh "mv ${env.TRIVY_REPORT_CSV} jenkins/"
 
                     // Change to the repository directory
-                    dir(jenkins) {
+                    dir('jenkins') {
                         sh 'git add .'
                         sh 'git commit -m "Add Trivy scan report"'
                         sh 'git push'
