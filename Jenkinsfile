@@ -37,7 +37,7 @@ pipeline {
                         try {
                             echo "Scanning Docker image with Trivy: ${imageName}"
                             // Scan the docker image with Trivy and capture the JSON output
-                            def trivyOutput = sh(script: "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --format json --timeout 15m ${imageName}", returnStdout: true)
+                            def trivyOutput = sh(script: "docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy image --format json ${imageName}", returnStdout: true)
                             def existingContent = readFile("${TRIVY_REPORT_JSON}")
                             def existingJson = new groovy.json.JsonSlurperClassic().parseText(existingContent)
                             def newJson = new groovy.json.JsonSlurperClassic().parseText(trivyOutput)
