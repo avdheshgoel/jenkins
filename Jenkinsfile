@@ -6,6 +6,7 @@ pipeline {
   }
   environment {
         TRIVY_REPORT_JSON = 'trivy_report.json'
+        GITHUB_REPO = 'avdheshgoel/jenkins'
   }
 
   stages {
@@ -111,6 +112,29 @@ pipeline {
                         writeFile(file: "${TRIVY_REPORT_CSV}", text: csvData)
                     } else {
                         error("JSON report file not found: ${TRIVY_REPORT_JSON}")
+                    }
+                }
+            }
+        }
+
+        stage('Upload CSV to GitHub') {
+            steps {
+                script {
+                    // Configure git
+//                     sh 'git config --global user.email "you@example.com"'
+//                     sh 'git config --global user.name "Your Name"'
+
+                    // Clone the repository
+                    sh "git clone https://github.com/${GITHUB_REPO}.git"
+
+                    // Move the CSV file to the repository directory
+                    sh "mv ${env.TRIVY_REPORT_CSV} ${GITHUB_REPO}/"
+
+                    // Change to the repository directory
+                    dir(GITHUB_REPO) {
+                        sh 'git add .'
+                        sh 'git commit -m "Add Trivy scan report"'
+                        sh 'git push'
                     }
                 }
             }
