@@ -70,16 +70,16 @@ pipeline {
                         def vulnMap = [:]
 
                         // Function to escape CSV fields
-                        def escapeCsv = { field ->
-                            if (field == null) {
-                                return ""
-                            }
-                            def escapedField = field.toString().replaceAll('"', '""')
-                            if (escapedField.contains(',') || escapedField.contains('\n')) {
-                                escapedField = "\"${escapedField}\""
-                            }
-                            return escapedField
-                        }
+//                         def escapeCsv = { field ->
+//                             if (field == null) {
+//                                 return ""
+//                             }
+//                             def escapedField = field.toString().replaceAll('"', '""')
+//                             if (escapedField.contains(',') || escapedField.contains('\n')) {
+//                                 escapedField = "\"${escapedField}\""
+//                             }
+//                             return escapedField
+//                         }
 
                         // Parse JSON and consolidate vulnerabilities
                         json.each { result ->
